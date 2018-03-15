@@ -15,7 +15,7 @@ body {
   color: #444;
 }
 
-.cell {
+.square {
   user-select: none;
   justify-content: center;
   display: flex;

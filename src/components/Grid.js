@@ -1,21 +1,21 @@
 import React from 'react';
-import Cell from './Cell';
+import Square from './Square';
 
-const Grid = ({grid, takeCell}) => {
+const Grid = ({grid, takeSquare}) => {
 
-  const cells = grid.map(function(cell, index){
+  const squares = grid.map(function(symbol, index){
     return (
-      <Cell 
+      <Square 
         key={index} 
-        player={cell} 
+        player={symbol} 
         location={index} 
-        takeCell={takeCell}
+        takeSquare={takeSquare}
       />)
   })
 
   return(
     <div id="grid">
-      {cells}
+      {squares}
     </div>
   )
 

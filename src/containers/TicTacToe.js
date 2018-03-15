@@ -14,12 +14,12 @@ class TicTacToe extends React.Component {
       winner: null
     };
 
-    this.takeCell = this.takeCell.bind(this);
+    this.takeSquare = this.takeSquare.bind(this);
     this.newGame = this.newGame.bind(this);
   }
 
-  takeCell(location) {
-    if (this.isEmpty(location) && !this.isGameOver()) {
+  takeSquare(location) {
+    if (this.isEmptySquare(location) && !this.isGameOver()) {
       const newGrid = this.state.grid.slice();
       newGrid[location] = this.state.currentPlayer;
       // setState is async, we need to check for a winner only when we are certain
@@ -29,8 +29,8 @@ class TicTacToe extends React.Component {
     }
   }
 
-  isEmpty(cellIndex){
-    return !this.state.grid[cellIndex];
+  isEmptySquare(squareIndex){
+    return !this.state.grid[squareIndex];
   }
 
   isGameOver(){
@@ -41,7 +41,7 @@ class TicTacToe extends React.Component {
     let winner = null;
 
     WIN_LINES.forEach((winLine) => {
-      if (winLine.every(cellNo => this.state.grid[cellNo] === this.state.currentPlayer)) {
+      if (winLine.every(squareNo => this.state.grid[squareNo] === this.state.currentPlayer)) {
         winner = this.state.currentPlayer;
       }
     })
@@ -78,7 +78,7 @@ class TicTacToe extends React.Component {
       <div>
         <Grid
           grid={this.state.grid}
-          takeCell={this.takeCell}
+          takeSquare={this.takeSquare}
         />
         <GameStatus
           winner={this.state.winner}
