@@ -19,14 +19,25 @@ class TicTacToe extends React.Component {
   }
 
   takeCell(location) {
-    if (!this.state.grid[location] && !this.state.winner) {
+    if (this.isEmpty(location) && !this.isGameOver()) {
       const newGrid = this.state.grid.slice();
       newGrid[location] = this.state.currentPlayer;
-      this.setState({ grid: newGrid }, this.checkForGameOver);
+      // setState is async, we need to check for a winner only when we are certain
+      // the state has been updated. We can give setState a 2nd argument -
+      // a callback that will be called only after the state has been updated
+      this.setState({ grid: newGrid }, this.checkForWinner);
     }
   }
 
-  checkForGameOver() {
+  isEmpty(cellIndex){
+    return !this.state.grid[cellIndex];
+  }
+
+  isGameOver(){
+    return this.state.winner !== null;
+  }
+
+  checkForWinner() {
     let winner = null;
 
     WIN_LINES.forEach((winLine) => {
@@ -72,7 +83,12 @@ class TicTacToe extends React.Component {
         <GameStatus
           winner={this.state.winner}
         />
-        <Button isVisible={this.state.winner} callback={this.newGame} text="Play Again"/>
+        <Button 
+          isVisible={this.state.winner} 
+          callback={this.newGame} 
+          text='Play Again'
+          className='play-again-button'
+        />
       </div>
     )
   }
