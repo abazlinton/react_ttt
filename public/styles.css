@@ -1,0 +1,27 @@
+body {
+  margin: 40px;
+}
+
+#grid {
+  display: grid;
+  align-items: stretch;
+  grid-template-columns: 20vw 20vw 20vw;
+  grid-template-rows: 20vw 20vw 20vw;
+  grid-gap: 0.5vw;
+  background-color: #fff;
+  color: #444;
+}
+
+.cell {
+  user-select: none;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  background-color: lightgrey;
+  font-size: 8vw;
+}
+
+button {
+  font-size: 3vw;
+}
+
