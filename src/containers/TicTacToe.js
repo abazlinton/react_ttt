@@ -11,8 +11,7 @@ class TicTacToe extends React.Component {
     this.state = {
       grid: Array(9).fill(null),
       currentPlayer: "X",
-      winner: null,
-      gameOver: false
+      winner: null
     };
 
     this.takeCell = this.takeCell.bind(this);
@@ -28,28 +27,26 @@ class TicTacToe extends React.Component {
   }
 
   checkForGameOver() {
-    const grid = this.state.grid;
-    const currentPlayer = this.state.currentPlayer;
+    let winner = null;
 
     WIN_LINES.forEach((winLine) => {
-      if (winLine.every(cellNo => grid[cellNo] === currentPlayer)) {
-        this.setState({ winner: currentPlayer, gameOver: true })
-        // this.newGame();
+      if (winLine.every(cellNo => this.state.grid[cellNo] === this.state.currentPlayer)) {
+        winner = this.state.currentPlayer;
       }
     })
-    if (!this.state.gameOver && this.gridComplete()) {
-      this.setState({ winner: "DRAW", gameOver: true });
-      // this.newGame();
+
+    if (!winner && this.gridComplete()) {
+      winner = "DRAW";
     }
-    if (!this.state.gameOver) this.nextTurn();
+
+    winner ? this.setState({winner: winner}) : this.nextTurn()
   }
 
   newGame() {
     this.setState({
       grid: Array(9).fill(null),
       currentPlayer: "X",
-      winner: null,
-      gameOver: false
+      winner: null
     })
   }
 
@@ -58,15 +55,12 @@ class TicTacToe extends React.Component {
   }
 
   nextTurn() {
-    let nextPlayer = "";
     if (this.state.currentPlayer === "X") {
-      nextPlayer = "O"
+      this.setState({ currentPlayer: "O" })
     } else {
-      nextPlayer = "X"
+      this.setState({ currentPlayer: "X" })
     }
-    this.setState({ currentPlayer: nextPlayer });
   }
-
 
   render() {
     return (
@@ -78,7 +72,7 @@ class TicTacToe extends React.Component {
         <GameStatus
           winner={this.state.winner}
         />
-        <Button isVisible={this.state.gameOver} callback={this.newGame} text="Play Again"/>
+        <Button isVisible={this.state.winner} callback={this.newGame} text="Play Again"/>
       </div>
     )
   }
